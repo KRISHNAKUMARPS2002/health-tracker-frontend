@@ -2,6 +2,9 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import api from "@/app/lib/api/axios";
+import { RegisterInput } from "@/app/lib/types";
 import Input from "../ui/Input";
 import Button from "../ui/Button";
 import Select from "../ui/Select";
@@ -16,12 +19,16 @@ export default function RegisterForm() {
   const [marital_status, setMaritalStatus] = useState("");
   const [weight, setWeight] = useState("");
   const [height, setHeight] = useState("");
+  const [blood_group, setBloodGroup] = useState("");
 
   const [showPassWord, setShowPassword] = useState(false);
 
-  const handleRegister = (e: React.FormEvent) => {
+  const router = useRouter();
+
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log({
+
+    const data: RegisterInput = {
       name,
       email,
       password,
@@ -30,8 +37,22 @@ export default function RegisterForm() {
       marital_status,
       weight: parseFloat(weight),
       height: parseFloat(height),
-    });
-    // TODO: Add API logic here
+      blood_group,
+    };
+
+    try {
+      const res = await api.post("/auth/register", data); // ✅ your backend route
+      console.log("✅ Registration success:", res.data);
+
+      alert("Registration successful!");
+      router.push("/login"); // navigate to login page
+    } catch (error: any) {
+      console.error(
+        "❌ Registration failed:",
+        error.response?.data || error.message
+      );
+      alert(error.response?.data?.message || "Registration failed");
+    }
   };
 
   return (
@@ -103,6 +124,22 @@ export default function RegisterForm() {
           { label: "Married", value: "married" },
         ]}
       />
+      <Select
+        label="Blood Group"
+        value={blood_group}
+        onChange={(e) => setBloodGroup(e.target.value)}
+        options={[
+          { label: "A+", value: "A+" },
+          { label: "A-", value: "A-" },
+          { label: "B+", value: "B+" },
+          { label: "B-", value: "B-" },
+          { label: "AB+", value: "AB+" },
+          { label: "AB-", value: "AB-" },
+          { label: "O+", value: "O+" },
+          { label: "O-", value: "O-" },
+        ]}
+      />
+
       <Input
         type="number"
         placeholder="Weight (kg)"

@@ -2,6 +2,10 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import api from "@/app/lib/api/axios";
+import { TOKEN_KEY } from "../../../../constants";
+import { LoginInput, LoginResponse } from "@/app/lib/types";
 import Input from "../ui/Input";
 import Button from "../ui/Button";
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
@@ -12,10 +16,31 @@ export default function LoginForm() {
 
   const [showPassWord, setShowPassword] = useState(false);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const router = useRouter();
+
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log({ email, password });
-    // TODO: Add API logic here
+
+    const data: LoginInput = {
+      email,
+      password,
+    };
+
+    try {
+      const res = await api.post<LoginResponse>("/auth/login", data);
+      const { token, message } = res.data;
+
+      console.log("✅ Login successful:", message);
+      alert("Login successful!");
+
+      localStorage.setItem(TOKEN_KEY, token);
+
+      // Redirect to dashboard or home
+      router.push("/dashboard");
+    } catch (error: any) {
+      console.error("❌ Login failed:", error.response?.data || error.message);
+      alert(error.response?.data?.message || "Login failed");
+    }
   };
 
   return (
