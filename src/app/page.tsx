@@ -1,7 +1,20 @@
+"use client";
+
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Button from "./components/ui/Button";
 
 export default function HomePage() {
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem("health_token");
+    if (token) {
+      router.replace("/dashboard");
+    }
+  }, []);
+
   return (
     <main className="min-h-screen flex items-center justify-center bg-background">
       <div className="text-center space-y-4">

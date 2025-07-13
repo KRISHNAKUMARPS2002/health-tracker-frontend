@@ -1,4 +1,4 @@
-// src/lib/types/index.d.ts
+// src/lib/types/user.d.ts
 
 export interface User {
   id: number;
