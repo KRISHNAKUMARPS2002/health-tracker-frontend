@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import api from "@/app/lib/api/axios";
 import { TOKEN_KEY } from "../../../../constants";
 import { LoginInput, LoginResponse } from "@/app/lib/types/user";
+import { fetchUserProfile } from "@/app/lib/api/user";
 import Input from "../ui/Input";
 import Button from "../ui/Button";
 import toast from "react-hot-toast";
@@ -35,6 +36,10 @@ export default function LoginForm() {
       const { token, message } = res.data;
 
       localStorage.setItem(TOKEN_KEY, token);
+
+      // ✅ Fetch profile before redirect
+      const user = await fetchUserProfile();
+      localStorage.setItem("user", JSON.stringify(user));
 
       toast.success("Login successful!");
       // Redirect to dashboard or home

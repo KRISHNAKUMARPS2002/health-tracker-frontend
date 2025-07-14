@@ -3,7 +3,8 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { TOKEN_KEY } from "../../../constants";
-import Button from "@/app/components/ui/Button"; // if you're using a custom Button
+import Button from "@/app/components/ui/Button";
+import Header from "../components/layout/Header";
 
 const DashboardPage = () => {
   const router = useRouter();
@@ -14,10 +15,8 @@ const DashboardPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center space-y-6">
-      <h1 className="text-2xl font-bold text-primary">
-        Welcome to the Dashboard
-      </h1>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      <Header />
 
       {/* Logout Button */}
       <Button onClick={handleLogout} variant="secondary">

@@ -34,3 +34,11 @@ export interface LoginResponse {
   message: string;
   token: string;
 }
+
+export interface UpdateProfileInput {
+  password?: string;
+  weight?: number;
+  height?: number;
+  marital_status?: string;
+  age?: number;
+}
