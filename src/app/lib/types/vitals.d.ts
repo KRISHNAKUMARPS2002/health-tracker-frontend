@@ -7,6 +7,7 @@ export interface VitalsInput {
   temperature?: number;
   spo2?: number;
   weight?: number;
+  height?: number;
   notes?: string;
   measuredAt?: string; // ISO string or date
   source?: "manual" | "device" | string; // Default is "manual"
@@ -15,6 +16,7 @@ export interface VitalsInput {
 export interface VitalsLog extends VitalsInput {
   _id: string;
   userId: string;
+  height?: number;
   bmi?: number;
   status?: string;
   reasons?: string[];

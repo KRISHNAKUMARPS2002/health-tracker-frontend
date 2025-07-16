@@ -1,4 +1,4 @@
-// src/lib/api/axios.ts
+// src/app/lib/api/axios.ts
 import axios from "axios";
 import { TOKEN_KEY } from "../../../../constants";
 

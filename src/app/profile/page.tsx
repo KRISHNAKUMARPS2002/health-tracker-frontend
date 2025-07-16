@@ -45,19 +45,21 @@ const ProfilePage = () => {
           onClick={() => router.back()} // or router.push("/dashboard") for a specific route
           className="absolute top-8 left-4 flex items-center gap-2 text-sm text-gray-900 hover:text-indigo-600 transition cursor-pointer"
         >
-          <IoArrowBackCircleSharp className="text-4xl" />
+          <IoArrowBackCircleSharp className="text-2xl sm:text-4xl" />
           <span>Back</span>
         </button>
         {/* Avatar */}
-        <div className="w-20 h-20 mx-auto mb-4 relative">
-          <div className="w-full h-full bg-gradient-to-br from-blue-600 to-indigo-600 rounded-full flex items-center justify-center text-white text-3xl font-bold shadow-lg">
+        <div className="w-10 h-10 sm:w-20 sm:h-20 mx-auto mb-2 sm:mb-4 relative">
+          <div className="w-full h-full bg-gradient-to-br from-blue-600 to-indigo-600 rounded-full flex items-center justify-center text-white text-xl sm:text-3xl font-bold shadow-lg">
             {user.name?.charAt(0).toUpperCase()}
           </div>
         </div>
 
         {/* User Info */}
-        <div className="text-center mb-6">
-          <p className="text-xl font-semibold text-gray-900">{user.name}</p>
+        <div className="text-center mb-3 sm:mb-6">
+          <p className="text-sm sm:text-xl font-semibold text-gray-900">
+            {user.name}
+          </p>
           <p className="text-sm text-gray-500">{user.email}</p>
         </div>
 
@@ -191,7 +193,7 @@ const ProfilePage = () => {
               />
             </div>
             {/* Action Buttons */}
-            <div className="flex gap-4 justify-center">
+            <div className="flex gap-1 sm:gap-4 justify-center">
               <Button type="submit" variant="primary" size="sm">
                 Save
               </Button>
