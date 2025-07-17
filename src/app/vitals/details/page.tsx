@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { getVitals } from "@/app/lib/api/vitals";
 import camelcaseKeys from "camelcase-keys";
 import { VitalsLog } from "@/app/lib/types/vitals";
@@ -24,6 +25,8 @@ import {
 const VitalsDetailsPage = () => {
   const [vitals, setVitals] = useState<VitalsLog | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+
+  const router = useRouter();
 
   useEffect(() => {
     const fetchVitals = async () => {
@@ -246,7 +249,7 @@ const VitalsDetailsPage = () => {
 
         {/* Back Button */}
         <div className="flex justify-center mt-4 sm:mt-8">
-          <Button variant="outline" onClick={() => window.history.back()}>
+          <Button variant="outline" onClick={() => router.push("/dashboard")}>
             Back to Dashboard
           </Button>
         </div>

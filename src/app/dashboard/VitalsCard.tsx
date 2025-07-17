@@ -18,11 +18,14 @@ import {
   Eye,
   Calendar,
   Target,
+  AlertTriangle,
   AlertCircle,
   CheckCircle,
 } from "lucide-react";
 import { getVitals } from "../lib/api/vitals";
 import { VitalsLog } from "../lib/types/vitals";
+
+type VitalStatus = "Normal" | "Warning" | "Critical";
 
 const VitalsCard = () => {
   const [vitals, setVitals] = useState<VitalsLog | null>(null);
@@ -60,6 +63,18 @@ const VitalsCard = () => {
     );
   }
 
+  const statusIconMap: Record<VitalStatus, React.ReactElement> = {
+    Normal: <CheckCircle className="w-3 h-3 fill-emerald-500" />,
+    Warning: <AlertTriangle className="w-3 h-3 text-yellow-500" />,
+    Critical: <AlertTriangle className="w-3 h-3 text-red-500" />,
+  };
+
+  const statusColorMap: Record<VitalStatus, string> = {
+    Normal: "text-emerald-600",
+    Warning: "text-yellow-600",
+    Critical: "text-red-600",
+  };
+
   if (!vitals) {
     return (
       <Card className="text-center py-8">
@@ -78,7 +93,7 @@ const VitalsCard = () => {
             variant="secondary"
             size="md"
             className="flex items-center gap-1 sm:gap-2"
-            onClick={() => {}}
+            onClick={() => router.push("/vitals/add")}
           >
             <Plus className="w-4 h-4" />
             Add Your First Vitals
@@ -88,6 +103,8 @@ const VitalsCard = () => {
     );
   }
 
+  const status: VitalStatus = (vitals.status as VitalStatus) || "Normal";
+
   return (
     <Card gradient={true} className="max-w-[700px] mx-auto">
       <div className="flex items-center justify-between mb-4">
@@ -96,14 +113,12 @@ const VitalsCard = () => {
           Latest Vitals
         </h3>
         <div className="flex items-center gap-1">
-          <CheckCircle className="w-4 h-4 text-emerald-500" />
-          <span className="text-sm text-emerald-600 font-medium">
-            {vitals.status || "Normal"}
-          </span>
+          {statusIconMap[status]}
+          <span className={statusColorMap[status]}>{status}</span>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4  mb-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
         <VitalItem
           label="Blood Pressure"
           value={vitals.bloodPressure}

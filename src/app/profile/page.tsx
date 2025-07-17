@@ -154,26 +154,6 @@ const ProfilePage = () => {
               />
             </div>
 
-            {/* Height Input */}
-            <div className="space-y-1">
-              <label
-                htmlFor="height"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Height (cm)
-              </label>
-              <Input
-                id="height"
-                type="number"
-                name="height"
-                placeholder="Height (cm)"
-                value={formData.height ?? ""}
-                onChange={(e) =>
-                  setFormData({ ...formData, height: parseInt(e.target.value) })
-                }
-              />
-            </div>
-
             {/* Password Input */}
             <div className="space-y-1">
               <label
